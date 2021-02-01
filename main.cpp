@@ -1,10 +1,9 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-// using namespace cv;
-
 
 // using namespace cv;
-using namespace std;
+
+// using namespace std;
 int main(int, char**)
 {
     cv::Mat frame;
@@ -12,7 +11,7 @@ int main(int, char**)
     cv::CascadeClassifier faceDetector;
 
     double ScalingFactor =1;
-    string harcascdePath= "haarcascade_frontalface_default.xml";
+    std::string harcascdePath= "haarcascade_frontalface_default.xml";
     
     // loading harcascade file
     faceDetector.load(harcascdePath);
@@ -29,23 +28,33 @@ int main(int, char**)
     cap.open(deviceID, apiID);
     // check if we succeeded
     if (!cap.isOpened()) {
-        cerr << "ERROR! Unable to open camera\n";
+        std::cerr << "ERROR! Unable to open camera\n";
         return -1;
     }
     //--- GRAB AND WRITE LOOP
     cv::Mat Gray_frame;
-    cout << "Start grabbing" << endl
-        << "Press any key to terminate" << endl;
+    std::cout << "Start grabbing" <<std::endl
+        << "Press any key to terminate" << std::endl;
     while (true)
     {
         // wait for a new frame from camera and store it into 'frame'
         cap.read(frame);
         cv::cvtColor(frame, Gray_frame, cv::COLOR_BGR2GRAY);
         cv::imshow("gray", Gray_frame);
+        // std::vector<Rect> faces;
+        // faceDetector.detectMultiScale(Gray_frame, faces);
+        // for (size_t i =0; i<faces.size(); i++)
+        // {
+        // cv::Point center( faces[i].x + faces[i].width/2, faces[i].y + faces[i].height/2 );
+        // cv::ellipse( frame, center, Size( faces[i].width/2, faces[i].height/2 ), 0, 0, 360, Scalar( 255, 0, 255 ), 3 );
+
+
+        // }
+
         
         // check if we succeeded
         if (frame.empty()) {
-            cerr << "ERROR! blank frame grabbed\n";
+            std::cerr << "ERROR! blank frame grabbed\n";
             break;
         }
         // show live and wait for a key with timeout long enough to show images
